@@ -62,7 +62,6 @@
     <Compile Include="Help\IHelpManager.cs" />
     <Compile Include="CoreInstaller.cs" />
     <Compile Include="IoC\WindsorExtensions.cs" />
-    <Compile Include="Models\MainWindowVM.cs" />
     <Compile Include="ViewModels\DelegateCommand.cs" />
     <Compile Include="Views\IMainView.cs" />
     <Compile Include="Views\ISecondView.cs" />
@@ -73,9 +72,6 @@
     <Compile Include="ViewModels\IViewModel.cs" />
     <Compile Include="IoC\IAbstructFactory.cs" />
     <Compile Include="IoC\IShell.cs" />
-    <Compile Include="IoC\ViewActivatorFacility.cs" />
-    <Compile Include="IoC\WindsorViewFactory.cs" />
-    <Compile Include="IoC\WPFWindowActivator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

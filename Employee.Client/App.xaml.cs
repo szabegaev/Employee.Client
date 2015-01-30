@@ -1,7 +1,6 @@
-﻿using Castle.Core;
-using Castle.MicroKernel.Registration;
+﻿using Castle.MicroKernel.Registration;
 using Castle.Windsor;
-using Castle.Windsor.Installer;
+using Employee.Client.View;
 using Employee.Client.Views;
 using Employee.Core;
 using Employee.Core.Config;
@@ -9,7 +8,6 @@ using Employee.Core.IoC;
 using Employee.Core.Views;
 using System;
 using System.Windows;
-using Employee.Core.ViewModels;
 using Employee.Core.Windsor;
 
 namespace Employee.Client
@@ -55,6 +53,12 @@ namespace Employee.Client
 
             Container.Register(Component.For<IWindsorInstaller>().ImplementedBy<CoreInstaller>());
 
+            foreach (var windsorInstaller in Container.ResolveAll<IWindsorInstaller>())
+            {
+                Container.Install(windsorInstaller);
+                Container.Release(windsorInstaller);
+            }
+
             Container.Register(Component.For<IShell<MainWindow>>().ImplementedBy<Shell>().LifestyleTransient());
             Container.Register(Component.For<MainWindow>().LifestyleTransient());
         }
@@ -63,6 +67,7 @@ namespace Employee.Client
         {
             var mainProgram = Container.Resolve<IShell<MainWindow>>();
             mainProgram.Run();
+            Container.Release(mainProgram);
         }
         
         
