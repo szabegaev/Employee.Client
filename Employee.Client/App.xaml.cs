@@ -2,8 +2,10 @@
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
+using Employee.Client.Views;
 using Employee.Core;
 using Employee.Core.Config;
+using Employee.Core.IoC;
 using Employee.Core.Views;
 using System;
 using System.Windows;
@@ -21,21 +23,14 @@ namespace Employee.Client
         public AppConfig Configuration { get; private set; }
 
         private volatile IWindsorContainer _theWindsorContainer;
-        private object syncRoot = new Object();
-
+        
         public IWindsorContainer Container
         {
             get
             {
                 if (_theWindsorContainer == null)
                 {
-                    lock (syncRoot)
-                    {
-                        if (_theWindsorContainer == null)
-                        {
-                            _theWindsorContainer = new WindsorContainer().Install(FromAssembly.This());
-                        }
-                    }
+                    _theWindsorContainer = new WindsorContainer();
                 }
 
                 return _theWindsorContainer;
@@ -44,28 +39,30 @@ namespace Employee.Client
 
         public App()
         {
-            ConfigureContainer();
+            InitializeApplication();
+           
+            RegisterConfigurationProvider();
+
+            Configuration = LoadConfiguration();
         }
 
-        private void ConfigureContainer()
+        private void InitializeApplication()
         {
+            Component
+                .For<IWindsorContainer>()
+                .Instance(Container)
+                .RegisterIn(Container);
+
             Container.Register(Component.For<IWindsorInstaller>().ImplementedBy<CoreInstaller>());
 
             Container.Register(Component.For<IShell<MainWindow>>().ImplementedBy<Shell>().LifestyleTransient());
             Container.Register(Component.For<MainWindow>().LifestyleTransient());
-            
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            RegisterConfigurationProvider();
-
-            // загружаем конфигурацию
-            Configuration = LoadConfiguration();
-
             var mainProgram = Container.Resolve<IShell<MainWindow>>();
             mainProgram.Run();
-
         }
         
         

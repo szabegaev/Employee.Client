@@ -34,7 +34,7 @@ namespace Employee.Core.Models
         private void ShowSecondWindow()
         {
             var view = viewFactory.CreateView<ISecondView>();
-            view.ShowDialog();
+            //view.ShowDialog();
         }
 
         public ICommand ShowHelp
@@ -46,6 +46,18 @@ namespace Employee.Core.Models
         private void ShowUserHelp()
         {
             ParentView.ShowHelp();
+        }
+
+        public Help.IHelpManager Help
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

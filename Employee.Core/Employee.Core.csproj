@@ -50,7 +50,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Config\AppConfig.cs" />
     <Compile Include="Config\FileConfigProvider.cs" />
     <Compile Include="Config\IConfigProvider.cs" />
@@ -62,6 +61,7 @@
     <Compile Include="Config\PluginsSection.cs" />
     <Compile Include="Help\IHelpManager.cs" />
     <Compile Include="CoreInstaller.cs" />
+    <Compile Include="IoC\WindsorExtensions.cs" />
     <Compile Include="Models\MainWindowVM.cs" />
     <Compile Include="ViewModels\DelegateCommand.cs" />
     <Compile Include="Views\IMainView.cs" />
